@@ -3,7 +3,7 @@
 *.ilg
 *.ind
 *.log
-*.pdf
+*.tex
 *.synctex.gz
 *.idx
 *.toc
@@ -13,3 +13,4 @@
 *.nav
 *.snm
 Thumbs.db
+linear-algebra/
