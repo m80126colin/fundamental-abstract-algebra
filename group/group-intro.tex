@@ -1,0 +1,170 @@
+\ifx \allfiles \undefined
+\documentclass[12pt,a4paper,oneside]{report}
+
+%% === CJK 套件 ===
+\usepackage{CJKutf8,CJKnumb}                    % 中文套件
+\usepackage[unicode]{hyperref,xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={blue!100!black},
+    citecolor={blue!75!black},
+    urlcolor={blue!50!black}
+}
+%% === AMS 標準套件 ===
+\usepackage{amsmath,amsfonts,amssymb,amsthm}    % 數學符號
+%% === 章節內容 ===
+\usepackage{enumitem}                           % 修改 enumerate, item
+\usepackage{titletoc,titlesec}                  % titletoc 目錄修改套件, titlesec 美化章節標題套件
+\usepackage{imakeidx}                           % 索引
+%% ===  ===
+\usepackage[chapter]{algorithm}                 % 演算法套件
+\usepackage[noend]{algpseudocode}               % pseudocode 套件
+\usepackage{listings}                           % 程式碼
+%% ===  ===
+\usepackage{tikz,tkz-graph,tkz-berge}
+%% ===  ===
+\usepackage{xkeyval,xargs}
+
+\makeindex[name=noun]        % 索引生成
+\linespread{1.24}
+
+%% === 設定頁面格式 ===
+%\hoffset         = 10pt                      % 水平位移，預設為 0pt
+\voffset         = -15pt                     % 垂直位移，預設為 0pt
+\oddsidemargin   = 0pt                       % 預設為 31pt
+%\topmargin       = 20pt                      % 預設為 20pt
+%\headheight      = 12pt                      % header 的高度，預設為 12pt
+%\headsep         = 25pt                      % header 和 body 的距離，預設為 25pt
+\textheight      = 620pt                     % body 內文部分的高度，預設為 592pt
+\textwidth       = 450pt                     % body 內文部分的寬度，預設為 390pt
+%\marginparsep    = 10pt                      % margin note 和 body 的距離，預設為 10pt
+%\marginparwidth  = 35pt                      % margin note 的寬度，預設為 35pt
+%\footskip        = 30pt                      % footer 高度 + footer 和 body 的距離，預設為 30pt
+
+%% === itemize,enumerate 設定 ===
+%  使用 enumitem 套件
+\setlist[itemize]{itemsep=0pt,parsep=0pt}
+\setlist[enumerate]{itemsep=0pt,parsep=0pt}
+
+\begin{document}
+\begin{CJK}{UTF8}{bkai}
+\newtheorem{mydef}{定義}[chapter]
+\newtheorem*{mydef*}{定義}
+\newtheorem{myrule}[mydef]{原理}
+\newtheorem{mythm}[mydef]{定理}
+\newtheorem{mypropo}[mydef]{性質}
+\newtheorem{mycorol}[mydef]{推論}
+\newtheorem{myexample}[mydef]{範例}
+\newtheorem*{mynote*}{註}
+\numberwithin{equation}{section}
+\renewenvironment{proof}{\textbf{證明}}{\qed}
+\newenvironment{mysol}{\textbf{解答}}{\qed}
+
+%% === 載入符號表 ===
+\input{../symbol-table.tex}
+\fi
+
+\chapter{群}
+\section{定義與性質}
+
+\begin{mydef}[群]
+\label{def:group:group}
+一個代數結構 $\Group$ 被稱為\textbf{群 (Group)}，滿足以下條件：
+\begin{enumerate}[label=(G\arabic*),labelindent=\parindent,leftmargin=*]
+\item \label{def:group:g1} 有封閉律，對於所有 $a,b\in{\GroupSet}$，$\GOp{a}{b}\in{\GroupSet}$
+\item \label{def:group:g2} 有結合律，對於所有 $a,b,c\in{\GroupSet}$，$\GOp{(\GOp{a}{b})}{c}=\GOp{a}{(\GOp{b}{c})}$
+\item \label{def:group:g3} 有單位元素 $e\in{\GroupSet}$，使得所有 $a\in{\GroupSet}$，$\GOp{e}{a}=\GOp{a}{e}=a$
+\item \label{def:group:g4} 對於每個元素 $a\in{\GroupSet}$ 都有反元素 $b\in{\GroupSet}$，使得 $\GOp{a}{b}=\GOp{b}{a}=e$
+\end{enumerate}
+此時 $\GroupRelation$ 稱為\textbf{群乘法}。
+\end{mydef}
+
+\begin{mypropo}[群的性質]
+\label{pro_group_identity_inverse}
+若 $\Group$ 為一個群，則有以下性質：
+\begin{enumerate}
+\item 單位元素唯一。
+\item 對於所有 $a\in{\GroupSet}$，其反元素唯一。
+\end{enumerate}
+\end{mypropo}
+\begin{proof}
+\begin{enumerate}
+\item 根據定理 \ref{thm:algebra:identity_uniqueness} 得證。
+\item 根據定理 \ref{thm:algebra:inverse_uniqueness} 得證。
+\end{enumerate}
+\end{proof}
+
+\begin{mydef}[符號簡化]
+\label{def:group:symbols_simplify}
+若一個群 $\GroupSet$ 的二元運算為群乘法 $\GroupRelation$，則我們可對符號簡化：
+\begin{enumerate}
+\item 對於所有 $a,b\in{\GroupSet}$，$\GOp{a}{b}\Leftrightarrow{ab}$。
+\item 對於所有 $a\in{\GroupSet}$，其反元素記為 $a^{-1}$。
+\item 定義群連乘 $a^k$，$k\in{\Int}$：
+\begin{enumerate}
+\item $k=0$ 時，$a^k=a^0=e$
+\item $k>0$ 時，$a^k=\GOp{a}{a^{k-1}}=aa^{k-1}$
+\item $k<0$ 時，$a^k=\GOp{a^{-1}}{a^{k+1}}=a^{-1}a^{k+1}$
+\end{enumerate}
+\end{enumerate}
+\end{mydef}
+
+\begin{mypropo}
+\label{def:group:inverse_property}
+若 $\Group$ 為一個群，對於所有 $a,b\in{\GroupSet}$，則有以下性質：
+\begin{enumerate}
+\item ${\left({a^{-1}}\right)}^{-1}=a$
+\item ${\left({ab}\right)}^{-1}=b^{-1}a^{-1}$
+\end{enumerate}
+\end{mypropo}
+\begin{mynote*}
+${\left({a^{-1}}\right)}^{-1}$ 應理解為「$a^{-1}$ 的反元素」。
+\end{mynote*}
+\begin{proof}
+\begin{enumerate}
+\item 我們知道 $a^{-1}$ 是 $a$ 的反元素，且 ${\left({a^{-1}}\right)}^{-1}$ 也是 $a^{-1}$ 的反元素，根據群的定義 \ref{def:group:g4}，我們知道
+\begin{align*}
+a^{-1}a&=aa^{-1}=e\\
+{\left({a^{-1}}\right)}^{-1}a^{-1}&=a^{-1}{\left({a^{-1}}\right)}^{-1}=e
+\end{align*}
+因此
+\begin{align*}
+a &= ea                                    &\text{群的定義 \ref{def:group:g3}}\\
+  &= ({\left({a^{-1}}\right)}^{-1}a^{-1})a &{\left({a^{-1}}\right)}^{-1}a^{-1}=e\\
+  &= {\left({a^{-1}}\right)}^{-1}(a^{-1}a) &\text{群的定義 \ref{def:group:g2}}\\
+  &= {\left({a^{-1}}\right)}^{-1}e         &a^{-1}a=e\\
+  &= {\left({a^{-1}}\right)}^{-1}          &\text{群的定義 \ref{def:group:g3}}
+\end{align*}
+\item 做為習題。
+\end{enumerate}
+\end{proof}
+
+\begin{mypropo}[群的消去律]
+\label{pro:group:cancellation_law}
+若 $\Group$ 為一個群，則 $\GroupSet$ 滿足消去律。即對於所有 $a,b,c\in{\GroupSet}$，若
+\begin{enumerate}
+\item $ab=ac$，則 $b=c$
+\item $ba=ca$，則 $b=c$
+\end{enumerate}
+\end{mypropo}
+\begin{proof}
+根據定理 \ref{thm:algebra:cancellation_law} 得證。
+\end{proof}
+
+\begin{mythm}
+\label{thm:group:equilibrium}
+若 $\Group$ 為一個群，則對於任意 $a,b\in{\GroupSet}$，$x,y$ 是未知數，$ax=b$ 和 $ya=b$ 存在唯一解。
+\end{mythm}
+\begin{proof}
+由定理 \ref{thm:algebra:identity_inverse_equilibrium} 可知唯一解為 $x=a^{-1}b$ 且 $y=ba^{-1}$。
+\end{proof}
+
+\section{子群}
+
+\ifx \allfiles \undefined
+\printindex[noun]
+
+\clearpage
+\end{CJK}
+\end{document}
+\fi

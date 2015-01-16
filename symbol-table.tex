@@ -1,0 +1,40 @@
+%% === Basic Number Symbols ===
+\providecommandx*{\PosInt}{\ensuremath{{\mathbb{Z}^{+}}}}
+\providecommandx*{\NonNegInt}{\ensuremath{\mathbb{N}}}
+\providecommandx*{\Int}{\ensuremath{\mathbb{Z}}}
+\providecommandx*{\Ration}{\ensuremath{\mathbb{Q}}}
+\providecommandx*{\Irration}{\ensuremath{\mathbb{Q}_{c}}}
+\providecommandx*{\Real}{\ensuremath{\mathbb{R}}}
+\providecommandx*{\Comp}{\ensuremath{\mathbb{C}}}
+\providecommandx*{\Mat}[3][1=n,2=n]{\ensuremath{\mathbb{M}_{#1\times{#2}}{\left({#3}\right)}}}
+\providecommandx*{\FuncSet}[3][1=\mathbb{F},2=\mathbb{R},3=\mathbb{R}]{\ensuremath{#1{\left({#2,#3}\right)}}}
+%% ===  ===
+\providecommandx*{\True}{\ensuremath{\top}}
+\providecommandx*{\False}{\ensuremath{\bot}}
+%% ===  ===
+\providecommandx*{\Func}[3]{\ensuremath{#1:#2\rightarrow{#3}}}
+\providecommandx*{\DefSet}[2]{\ensuremath{\left\{{#1|#2}\right\}}}
+\providecommandx*{\NSet}[3][1=A,2=\times,3=n]{\ensuremath{{#1}_{1}#2{{#1}_{2}}#2\ldots{#2{#1}_{#3}}}}
+
+%% ===  ===
+\providecommandx*{\defaultSet}{\ensuremath{S}}
+\providecommandx*{\defaultRelation}[2][1=,2=\mathcal{R}]{\ensuremath{{#2}_{#1}}}
+\providecommandx*{\defaultFirstRelation}{\ensuremath{\defaultRelation[1]}}
+\providecommandx*{\defaultSecondRelation}{\ensuremath{\defaultRelation[2]}}
+\providecommandx*{\defaultTwoRelation}{\ensuremath{\defaultFirstRelation,\defaultSecondRelation}}
+\providecommandx*{\defaultNRelation}[2][1=1,2=n]{\ensuremath{\defaultRelation[#1],\ldots{},\defaultRelation[#2]}}
+%% === Algebra ===
+\providecommandx*{\defaultAdd}[1][1=\defaultSet]{\ensuremath{\defaultRelation[#1][+]}}
+\providecommandx*{\defaultTimes}[1][1=\defaultSet]{\ensuremath{\defaultRelation[#1][\cdot]}}
+\providecommandx*{\defaultZero}[1][1=\defaultSet]{\ensuremath{{0}_{#1}}}
+\providecommandx*{\defaultUnit}[1][1=\defaultSet]{\ensuremath{{1}_{#1}}}
+\providecommandx*{\Algebra}[2][1=\defaultSet,2=\defaultRelation]{\ensuremath{\left({#1,#2}\right)}}
+\providecommandx*{\AddAlgebra}[1][1=\defaultSet]{\ensuremath{\Algebra[#1][{\defaultAdd[#1]}]}}
+\providecommandx*{\TimesAlgebra}[1][1=\defaultSet]{\ensuremath{\Algebra[#1][{\defaultTimes[#1]}]}}
+\providecommandx*{\GeneralAlgebra}[2][1=\defaultSet,2=\defaultNRelation]{\ensuremath{\Algebra[#1][#2]}}
+\providecommandx*{\Op}[3][1=\defaultRelation]{\ensuremath{#2#1#3}}
+%% === Group ===
+\providecommandx*{\GroupSet}[1][1=G]{\ensuremath{#1}}
+\providecommandx*{\GroupRelation}[2][1=\GroupSet,2=\cdot]{\ensuremath{#2_{#1}}}
+\providecommandx*{\Group}[2][1=\GroupSet,2=\GroupRelation]{\ensuremath{\Algebra[#1][{#2[#1]}]}}
+\providecommandx*{\GOp}[3][1=\GroupRelation]{\ensuremath{\Op[#1]{#2}{#3}}}

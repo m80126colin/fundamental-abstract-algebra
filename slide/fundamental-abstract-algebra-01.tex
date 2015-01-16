@@ -1,0 +1,387 @@
+\documentclass[utf8]{beamer}
+
+\usepackage{CJKutf8}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{tkz-graph,tkz-berge}
+\usepackage{multicol}
+\usepackage{xkeyval,xargs}
+
+\usetheme{Boadilla}
+\usecolortheme{crane}
+
+\setbeamertemplate{items}[circle]
+
+\begin{document}
+\begin{CJK}{UTF8}{bkai}
+
+\newtheorem{mydef}{定義}[section]
+\newtheorem*{mydef*}{定義}
+\newtheorem{myrule}[mydef]{原理}
+\newtheorem{mythm}[mydef]{定理}
+%\newtheorem{mypropo}[mydef]{性質}
+\newtheorem{mycorol}[mydef]{推論}
+%\newtheorem{myexample}[mydef]{範例}
+%\newtheorem*{mynote*}{註}
+\numberwithin{equation}{section}
+\renewenvironment{proof}{\textbf{證明}}{\qed}
+\newenvironment{mysol}{\textbf{解答}}{\qed}
+\newenvironment{mypropo}{\begin{exampleblock}{性質}}{\end{exampleblock}}
+\newenvironment{myexample}{\begin{exampleblock}{範例}}{\end{exampleblock}}
+\newenvironment{mynote*}{\begin{alertblock}{註}}{\end{alertblock}}
+
+%% === 載入符號表 ===
+\input{../symbol-table.tex}
+
+\title{Fundamental Abstract Algebra\\基礎抽象代數}
+\author{許胖}
+\institute[PCSH]{板燒高中}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+\begin{frame}
+  \frametitle{大綱}
+  \tableofcontents
+\end{frame}
+
+\section{簡介}
+
+\begin{frame}
+  \frametitle{二元運算}
+  \begin{mydef}[二元運算]<1->
+  \label{def:algebra:binary_operation}
+  一個函數 $\Func{\defaultRelation}{A\times{B}}{C}$，對於所有 $a\in{A}$、$b\in{B}$，存在\textbf{唯一}的 $c\in{C}$，使得 $\defaultRelation{(a,b)}=c$，我們稱 $\defaultRelation$ 是一個從 $A\times{B}$ 到 $C$ 的\textbf{二元運算 (Binary Operation)}，此時記為 $a\defaultRelation{b}=c$。
+  \end{mydef}
+  \begin{mynote*}<2->
+  若 $A=B=C=\defaultSet$，我們稱 $\defaultRelation$ 是定義在 $\defaultSet$ 上的二元運算。
+  \end{mynote*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{範例}
+  \begin{myexample}<1->下列為二元運算：
+  \begin{enumerate}
+  \item<2-> 整數加法 $\Func{+}{\Int\times{\Int}}{\Int}$
+  \item<3-> 實數乘法 $\Func{\cdot}{\Real^2}{\Real}$
+  \item<4-> 實係數矩陣乘法 $\Func{\cdot}{\Mat[m][n]{\Real}\times\Mat[n][p]{\Real}}{\Mat[m][p]{\Real}}$
+  \item<5-> 充要條件 $\Func{\Leftrightarrow}{\mathcal{L}\times{\mathcal{L}}}{\left\{{\True,\False}\right\}}$
+  \item<6-> $\mathcal{O}{(n^2)}$ 的 LCS 演算法 $\Func{\textsc{LCS}}{{{\{0,1\}}^{m}}\times{{\{0,1\}}^{n}}}{{\{0,1\}}^{k}}$
+  \end{enumerate}
+  \end{myexample}
+\end{frame}
+
+\begin{frame}
+  \frametitle{n 元運算與代數系統}
+  \begin{mydef}[n元運算]<1->
+  \label{def:algebra:n_ary_operation}
+  一個函數 $\defaultRelation: \NSet\rightarrow{B}$，對於所有 ${\left({\NSet[a][,]}\right)}\in{\NSet}$，存在\textbf{唯一}的 $b\in{B}$，使得 $\defaultRelation{\left({\NSet[a][,]}\right)}=b$，我們稱 $\defaultRelation$ 是一個從 $\NSet$ 到 $B$ 的\textbf{ n 元運算 (n-ary Operation)}。
+  \end{mydef}
+  \begin{mydef}[代數結構與代數系統]<2->
+  \label{def:algebra:algebraic_structure}
+  一\textbf{代數結構 (Algebraic Structure)} $\GeneralAlgebra$ 滿足以下條件
+  \begin{enumerate}
+  \item<3-> 有一非空集合 $\defaultSet$
+  \item<4-> $\defaultNRelation$ 為定義在 $\defaultSet$ 上的二元運算
+  \item<5-> 一系列的公理 $\mathcal{A}$
+  \end{enumerate}
+  若 $\defaultNRelation$ 為定義在 $\defaultSet$ 上的 n 元運算，則稱 $\GeneralAlgebra$ 為\textbf{代數系統 (Algebraic System)}。
+  \end{mydef}
+\end{frame}
+
+\begin{frame}
+  \frametitle{範例}
+  \begin{myexample}<1->
+  下列為代數結構：
+  \begin{enumerate}
+  \item<2-> 有理數與加法、乘法 $\Algebra[\Ration][+,\cdot]$
+  \item<3-> 複係數矩陣乘法 $\Algebra[\Mat{\Comp}][\cdot]$
+  \item<4-> 正整數與最大公因數 $\Algebra[\PosInt][\gcd]$，其中最大公因數為二元運算 $\Func{\gcd}{\PosInt\times{\PosInt}}{\PosInt}$
+  \item<5-> 函數合成 $\Algebra[\FuncSet][\circ]$
+  \end{enumerate}
+  \end{myexample}
+\end{frame}
+
+\section{二元運算的性質}
+\subsection{基本性質}
+
+\begin{frame}
+  \frametitle{基本性質 (1)}
+  \begin{mydef}[封閉律]<1->
+  \label{def:algebra:closure}
+  一個代數結構 $\Algebra$ 中，若對於所有 $a,b\in{\defaultSet}$，使得 $\Op{a}{b}\in{S}$，則稱二元運算 $\defaultRelation$ 對 $\defaultSet$ 滿足\textbf{封閉律 (Closure)}。
+  \end{mydef}
+  \begin{mydef}[結合律]<2->
+  \label{def:algebra:associativity}
+  一個封閉的代數結構 $\Algebra$ 中，若對於所有 $a,b,c\in{\defaultSet}$，使得 $\Op{(\Op{a}{b})}{c}=\Op{a}{(\Op{b}{c})}$，則稱二元運算 $\defaultRelation$ 對 $\defaultSet$ 具有\textbf{結合律 (Associativity, Associative property)}。
+  \end{mydef}
+  \begin{mydef}[交換律]<3->
+  \label{def:algebra:commutativity}
+  一個封閉的代數結構 $\Algebra$ 中，若對於所有 $a,b\in{\defaultSet}$，使得 $\Op{a}{b}=\Op{b}{a}$，則稱二元運算 $\defaultRelation$ 對 $\defaultSet$ 具有\textbf{交換律 (Commutativity, Commutative property)}。
+  \end{mydef}
+\end{frame}
+
+\begin{frame}
+  \frametitle{基本性質 (2)}
+  \begin{mydef}[吸收律]<1->
+  \label{def:algebra:absorption_law}
+  一個封閉的代數結構 $\Algebra[\defaultSet][\defaultTwoRelation]$ 中，若對於所有 $a,b\in{\defaultSet}$，使得
+  \begin{align*}
+  \Op[\defaultFirstRelation]{a}{({\Op[\defaultSecondRelation]{a}{b})}}=a\\
+  \Op[\defaultSecondRelation]{a}{({\Op[\defaultFirstRelation]{a}{b})}}=a
+  \end{align*}
+  ，則稱二元運算 $\defaultTwoRelation$ 在 $\defaultSet$ 上滿足\textbf{吸收律 (Absorption law)}。
+  \end{mydef}
+  \begin{mynote*}<2->
+  吸收律是定義在\textbf{一對}二元運算上，因此不能單獨定義一個運算子具有吸收律。
+  \end{mynote*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{基本性質 (3)}
+  \begin{mydef}[分配律]<1->
+  \label{def:algebra:distributivity}
+  一個封閉的代數結構 $\Algebra[\defaultSet][\defaultTwoRelation]$ 中，若對於所有 $a,b,c\in{\defaultSet}$，使得
+  \begin{align*}
+  \Op[\defaultFirstRelation]{a}{({\Op[\defaultSecondRelation]{b}{c})}}=\Op[\defaultSecondRelation]{({\Op[\defaultFirstRelation]{a}{b}})}{({\Op[\defaultFirstRelation]{a}{c}})}\\
+  \Op[\defaultFirstRelation]{({\Op[\defaultSecondRelation]{b}{c})}}{a}=\Op[\defaultSecondRelation]{({\Op[\defaultFirstRelation]{b}{a}})}{({\Op[\defaultFirstRelation]{c}{a}})}
+  \end{align*}
+  ，則稱二元運算 $\defaultFirstRelation$ 在 $\defaultSet$ 上對 $\defaultSecondRelation$ 具有\textbf{分配律 (Distributivity, Distributive property)}。
+  \end{mydef}
+  \begin{mynote*}<2->
+  儘管 $\defaultFirstRelation$ 對 $\defaultSecondRelation$ 有分配律，但 $\defaultSecondRelation$ \textbf{未必}對 $\defaultFirstRelation$ 有分配律。
+  \end{mynote*}
+\end{frame}
+
+\subsection{單位元素}
+
+\begin{frame}
+  \frametitle{單位元素 (1)}
+  \begin{mydef}[單位元素]
+  \label{def:algebra:identity}
+  一個封閉的代數結構 $\Algebra$ 中，若
+  \begin{itemize}
+  \item 存在 $e_l\in{\defaultSet}$，對所有 $a\in{\defaultSet}$，$\Op{e_l}{a}=a$，則 $e_l$ 為\textbf{左單位元素 (Left identity)}
+  \item 存在 $e_r\in{\defaultSet}$，對所有 $a\in{\defaultSet}$，$\Op{a}{e_r}=a$，則 $e_r$ 為\textbf{右單位元素 (Right identity)}
+  \item 存在 $e\in{\defaultSet}$，對所有 $a\in{\defaultSet}$，$\Op{e}{a}=\Op{a}{e}=a$，則 $e$ 為\textbf{單位元素 (Identity)}
+  \end{itemize}
+  \end{mydef}
+\end{frame}
+
+\begin{frame}
+  \frametitle{單位元素 (2)}
+  \begin{mythm}[單位元素存在性]<1->
+  \label{thm:algebra:identity_existence}
+  一個封閉的代數結構 $\Algebra$ 中，若存在左單位元素 $e_l$、右單位元素 $e_r$，則 $e_l=e_r$，即單位元素存在。
+  \end{mythm}
+  \begin{mythm}[單位元素唯一性]<2->
+  \label{thm:algebra:identity_uniqueness}
+  一個封閉的代數結構 $\Algebra$ 中，若存在單位元素，則單位元素唯一。
+  \end{mythm}
+\end{frame}
+
+\subsection{反元素}
+
+\begin{frame}
+  \frametitle{反元素 (1)}
+  \begin{mydef}[反元素]
+  \label{def:algebra:inverse}
+  一個封閉的代數結構 $\Algebra$ 存在單位元素 $e\in{\defaultSet}$，若對 $a\in{\defaultSet}$，
+  \begin{itemize}
+  \item 存在 $b_l\in{\defaultSet}$，$\Op{b_l}{a}=e$，則 $b_l$ 稱為 $a$ 的\textbf{左反元素 (Left inverse)}
+  \item 存在 $b_r\in{\defaultSet}$，$\Op{a}{b_r}=e$，則 $b_r$ 稱為 $a$ 的\textbf{右反元素 (Right inverse)}
+  \item 存在 $b\in{\defaultSet}$，$\Op{b}{a}=\Op{a}{b}=e$，則 $b$ 稱為 $a$ 的\textbf{反元素 (Inverse)}，$a$ 又稱\textbf{可逆元素 (Invertible element)}
+  \end{itemize}
+  若對所有 $a\in{\defaultSet}$ 都有反元素，則稱 $\defaultRelation$ 在 $\defaultSet$ 上有\textbf{反元素 (Inverse property)}。
+  \end{mydef}
+\end{frame}
+
+\begin{frame}
+  \frametitle{反元素 (2)}
+  \begin{mypropo}<1->
+  \label{pro:algebra:identity_has_inverse}
+  一個封閉的代數結構 $\Algebra$ 存在單位元素 $e$，則 $e$ 的反元素為 $e$。
+  \end{mypropo}
+  \begin{mythm}[反元素存在性*]<2->
+  \label{thm:algebra:inverse_existence}
+  一個封閉的代數結構 $\Algebra$ 存在單位元素 $e$，且 $\defaultRelation$ 具有結合律，若 $a\in{\defaultSet}$ 存在左反元素 $b_l$，右反元素 $b_r$，則 $b_l=b_r$，即反元素存在。
+  \end{mythm}
+  \begin{mythm}[反元素唯一性*]<3->
+  \label{thm:algebra:inverse_uniqueness}
+  一個封閉的代數結構 $\Algebra$ 存在單位元素 $e$，且 $\defaultRelation$ 具有結合律，若 $a\in{\defaultSet}$ 存在反元素，則反元素唯一。
+  \end{mythm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{反元素 (3)}
+  \begin{mythm}
+  \label{thm:algebra:left_identity_inverse}
+  一個封閉的代數結構 $\Algebra$ 若滿足結合律，則以下兩個敘述是等價的：
+  \begin{enumerate}
+  \item<2-> \label{thm:algebra:left_id_inv_first}
+      \begin{enumerate}
+      \item 有左單位元素 $e_l$
+      \item 對所有 $a\in{\defaultSet}$，存在左反元素
+      \end{enumerate}
+  \item<3-> \label{thm:algebra:left_id_inv_second}
+      \begin{enumerate}
+      \item $e_l$ 是單位元素
+      \item (*)\label{exe:algebra:left_identity_inverse}對所有 $a\in{\defaultSet}$，存在反元素
+      \end{enumerate}
+  \end{enumerate}
+  \end{mythm}
+\end{frame}
+
+\subsection{零元素與零因子}
+
+\begin{frame}
+  \frametitle{零元素 (1)}
+  \begin{mydef}[零元素]<1->
+  \label{def:algebra:zero_element}
+  一個封閉的代數結構 $\Algebra$ 中，若
+  \begin{itemize}
+  \item 存在 $z_l\in{\defaultSet}$，對所有 $a\in{\defaultSet}$，$\Op{z_l}{a}=z_l$，則 $z_l$ 為\textbf{左零元素 (Left zero element)}
+  \item 存在 $z_r\in{\defaultSet}$，對所有 $a\in{\defaultSet}$，$\Op{a}{z_r}=z_r$，則 $z_r$ 為\textbf{右零元素 (Right zero element)}
+  \item 存在 $z\in{\defaultSet}$，對所有 $a\in{\defaultSet}$，$\Op{z}{a}=\Op{a}{z}=z$，則 $z$ 為\textbf{零元素 (Zero element)}
+  \end{itemize}
+  \end{mydef}
+  \begin{mynote*}<2->
+  零元素又稱\textbf{吸收元素 (Absorbing element)}。
+  \end{mynote*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{零元素 (2)}
+  \begin{mythm}[零元素存在性*]<1->
+  \label{thm:algebra:zero_existence}
+  一個封閉的代數結構 $\Algebra$ 具有結合律，若存在左零元素 $z_l$，右零元素 $z_r$，則 $z_l=z_r$，即零元素存在。
+  \end{mythm}
+  \begin{mythm}[零元素唯一性*]<2->
+  \label{thm:algebra:zero_uniqueness}
+  一個封閉的代數結構 $\Algebra$ 具有結合律，若存在零元素，則零元素唯一。
+  \end{mythm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{零元素 (3)}
+  \begin{mythm}<1->
+  \label{thm:algebra:identity_zero_distinct}
+  一個封閉的代數結構 $\Algebra$ 有單位元素 $e$、零元素 $z$，若 $|\defaultSet|\geq{2}$，則 $e\neq{z}$。
+  \end{mythm}
+  \begin{mypropo}<2->(*)
+  \label{pro:algebra:zero_no_inverse}
+  一個封閉的代數結構 $\Algebra$ 存在單位元素 $e$，若 $\defaultRelation$ 在 $\defaultSet$ 上有零元素 $z$ 且 $z\neq{e}$，則 $z$ 沒有反元素。
+  \end{mypropo}
+\end{frame}
+
+\begin{frame}
+  \frametitle{零因子}
+  \begin{mydef}[零因子]<1->
+  \label{def:algebra:zero_divisor}
+  一個封閉的代數結構 $\Algebra$ 中存在零元素 $z$，若 $a,b\in{\defaultSet}$ 且 $a,b\neq{z}$，使得 $\Op{a}{b}=z$，則 $a,b$ 稱為\textbf{零因子 (Zero divisor)}。
+  \end{mydef}
+  \begin{mythm}[零因子性質]<2->
+  \label{thm:algebra:zero_divisor_no_inverse}
+  一個封閉的代數結構 $\Algebra$ 滿足以下條件：
+  \begin{itemize}
+  \item 有結合律
+  \item 存在單位元素 $e$
+  \item 存在零元素 $z$
+  \end{itemize}
+  若 $a,b\in{\defaultSet}$ 是零因子，則 $a,b$ 沒有反元素。
+  \end{mythm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{消去律 (1)}
+  \begin{mydef}[消去律]
+  \label{def:algebra:cancellation_law}
+  一個封閉的代數結構 $\Algebra$ 中，對所有 $a,b,c\in{\defaultSet}$，若
+  \begin{itemize}
+  \item $\Op{a}{b}=\Op{a}{c}$ 可得到 $b=c$，則 $\defaultRelation$ 在 $\defaultSet$ 上有\textbf{左消去律 (Left cancellation law)}。
+  \item $\Op{b}{a}=\Op{c}{a}$ 可得到 $b=c$，則 $\defaultRelation$ 在 $\defaultSet$ 上有\textbf{右消去律 (Right cancellation law)}。
+  \item $\defaultRelation$ 滿足左消去律和右消去律，則 $\defaultRelation$ 在 $\defaultSet$ 上有\textbf{消去律 (Cancellation law)}。
+  \end{itemize}
+  \end{mydef}
+\end{frame}
+
+\begin{frame}
+  \frametitle{消去律 (2)}
+  \begin{mythm}[消去律性質]
+  \label{thm:algebra:cancellation_law}
+  一個封閉的代數結構 $\Algebra$ 滿足以下條件：
+  \begin{itemize}
+  \item 有結合律
+  \item 有單位元素 $e$
+  \item 對所有 $a\in{\defaultSet}$ 都有反元素
+  \end{itemize}
+  則 $\defaultRelation$ 在 $\defaultSet$ 上有消去律。
+  \end{mythm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{消去律 (3)}
+  \begin{mythm}
+  \label{thm:algebra:identity_inverse_equilibrium}
+  一個封閉的代數結構 $\Algebra$ 若滿足結合律，則以下兩個敘述是等價的：
+  \begin{enumerate}
+  \item<2-> \label{thm:algebra:id_inv_eq_first}
+      \begin{enumerate}
+      \item $e$ 是單位元素
+      \item 對所有 $a\in{\defaultSet}$，存在反元素
+      \end{enumerate}
+  \item<3-> \label{thm:algebra:id_inv_eq_second} 對於任意 $a,b\in{\defaultSet}$，$x,y$ 是未知數，方程式 $\Op{a}{x}=b$ 和 $\Op{y}{a}=b$ 存在唯一解。
+  \end{enumerate}
+  \end{mythm}
+\end{frame}
+
+\subsection{符號簡化}
+
+\begin{frame}
+  \frametitle{符號簡化 (1)}
+  \begin{mydef}[單位元素記號]
+  \label{def:algebra:identity_notation}
+  一個封閉的代數結構 $\Algebra$ 存在單位元素 $e$，若
+  \begin{itemize}
+  \item<1-> $\defaultRelation$ 為加法 $\defaultAdd$，則 $e$ 為\textbf{加法單位元素 (Additive identity)}，此時 $e$ 記為 $\defaultZero$。
+  \item<2-> $\defaultRelation$ 為乘法 $\defaultTimes$，則 $e$ 為\textbf{乘法單位元素 (Multiplicative identity)}，$e$ 記為 $\defaultUnit$。
+  \end{itemize}
+  \end{mydef}
+  \begin{mynote*}<3->
+  \begin{enumerate}
+  \item<3-> $\defaultAdd$ 不是真的代表實數或複數的加法運算，而是代表他在 $\defaultSet$ 上有類似我們常見的加法性質，因此用這個符號容易聯想；$\defaultTimes$ 亦然。
+  \item<4-> 使用 $0$ 和 $1$ 做為記號只是方便我們去聯想他的性質，事實上並不是實數的「$0$」和「$1$」，只是單純的\textbf{符號}。
+  \end{enumerate}
+  \end{mynote*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{符號簡化 (2)}
+  \begin{mydef}[反元素記號]
+  \label{def:algebra:inverse_notation}
+  一個封閉的代數結構 $\Algebra$ 存在單位元素 $e$，且所有 $a\in{\defaultSet}$ 均有反元素 $b\in{\defaultSet}$，若
+  \begin{itemize}
+  \item<1-> $\defaultRelation$ 為加法 $\defaultAdd$，則 $b$ 為\textbf{加法反元素 (Additive inverse)}，此時 $b$ 記為 $-a$。
+  \item<2-> $\defaultRelation$ 為乘法 $\defaultTimes$，則 $b$ 為\textbf{乘法反元素 (Multiplicative inverse)}，此時 $b$ 記為 $a^{-1}$。
+  \end{itemize}
+  \end{mydef}
+  \begin{mynote*}<3->
+  同樣地，$-a$ 和 $a^{-1}$ 只是單純的符號，不要和減法與倒數搞混。
+  \end{mynote*}
+\end{frame}
+
+\subsection{其他性質}
+
+\begin{frame}
+	\frametitle{冪等律}
+	\begin{mydef}[冪等元素與冪等律]
+	\label{def:algebra:idempotent}
+	一個封閉的代數結構 $\Algebra$ 中，若有 $a\in{\defaultSet}$，使得 $\Op{a}{a}=a$，則 $a$ 稱為\textbf{冪等元素 (Idempotent element)}。若所有 $a\in{\defaultSet}$ 都是冪等元素，則稱二元運算 $\defaultRelation$ 在 $\defaultSet$ 上滿足\textbf{冪等律 (Idempotent)}。
+	\end{mydef}
+\end{frame}
+
+\section{同態與同構}
+
+
+
+\end{CJK}
+\end{document}
