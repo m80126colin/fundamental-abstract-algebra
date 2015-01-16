@@ -1,0 +1,15 @@
+*.aux
+*.dvi
+*.ilg
+*.ind
+*.log
+*.pdf
+*.synctex.gz
+*.idx
+*.toc
+*.loa
+*.lof
+*.out
+*.nav
+*.snm
+Thumbs.db
