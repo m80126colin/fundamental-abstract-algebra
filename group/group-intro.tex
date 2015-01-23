@@ -52,6 +52,7 @@
 \newtheorem*{mydef*}{定義}
 \newtheorem{myrule}[mydef]{原理}
 \newtheorem{mythm}[mydef]{定理}
+\newtheorem{mylma}[mydef]{引理}
 \newtheorem{mypropo}[mydef]{性質}
 \newtheorem{mycorol}[mydef]{推論}
 \newtheorem{myexample}[mydef]{範例}
@@ -74,7 +75,7 @@
 \item \label{def:group:g1} 有封閉律，對於所有 $a,b\in{\GroupSet}$，$\GOp{a}{b}\in{\GroupSet}$
 \item \label{def:group:g2} 有結合律，對於所有 $a,b,c\in{\GroupSet}$，$\GOp{(\GOp{a}{b})}{c}=\GOp{a}{(\GOp{b}{c})}$
 \item \label{def:group:g3} 有單位元素 $e\in{\GroupSet}$，使得所有 $a\in{\GroupSet}$，$\GOp{e}{a}=\GOp{a}{e}=a$
-\item \label{def:group:g4} 對於每個元素 $a\in{\GroupSet}$ 都有反元素 $b\in{\GroupSet}$，使得 $\GOp{a}{b}=\GOp{b}{a}=e$
+\item \label{def:group:g4} 對於每個元素 $a\in{\GroupSet}$ 都有反元素 $a^{'}\in{\GroupSet}$，使得 $\GOp{a}{a^{'}}=\GOp{a^{'}}{a}=e$
 \end{enumerate}
 此時 $\GroupRelation$ 稱為\textbf{群乘法}。
 \end{mydef}
@@ -98,14 +99,8 @@
 \label{def:group:symbols_simplify}
 若一個群 $\GroupSet$ 的二元運算為群乘法 $\GroupRelation$，則我們可對符號簡化：
 \begin{enumerate}
-\item 對於所有 $a,b\in{\GroupSet}$，$\GOp{a}{b}\Leftrightarrow{ab}$。
+\item 對於所有 $a,b\in{\GroupSet}$，$\GOp{a}{b}$ 可寫為 $ab$。
 \item 對於所有 $a\in{\GroupSet}$，其反元素記為 $a^{-1}$。
-\item 定義群連乘 $a^k$，$k\in{\Int}$：
-\begin{enumerate}
-\item $k=0$ 時，$a^k=a^0=e$
-\item $k>0$ 時，$a^k=\GOp{a}{a^{k-1}}=aa^{k-1}$
-\item $k<0$ 時，$a^k=\GOp{a^{-1}}{a^{k+1}}=a^{-1}a^{k+1}$
-\end{enumerate}
 \end{enumerate}
 \end{mydef}
 
@@ -139,6 +134,24 @@ a &= ea                                    &\text{群的定義 \ref{def:group:g3
 \end{enumerate}
 \end{proof}
 
+\begin{mydef}[群連乘]
+\label{def:group:group_multiplication}
+若一個群 $\GroupSet$ 的二元運算為群乘法 $\GroupRelation$，則定義群連乘 $a^k$，$k\in{\Int}$：
+\begin{enumerate}
+\item $k=0$ 時，$a^k=a^0=e$
+\item $k>0$ 時，$a^k=\GOp{a}{a^{k-1}}=aa^{k-1}$；$a^{-k}={(a^{-1})}^k$
+\end{enumerate}
+\end{mydef}
+
+\begin{mycorol}[群連乘性質]
+一個群 $\GroupSet$ 中，對所有 $a\in{\GroupSet}$，$m,n\in{\Int}$，則
+\begin{enumerate}
+\item ${a^m}{a^n}=a^{m+n}={a^n}{a^m}$
+\item ${({a^m})}^n=a^{mn}$
+\item ${({a^m})}^{-1}=a^{-m}$
+\end{enumerate}
+\end{mycorol}
+
 \begin{mypropo}[群的消去律]
 \label{pro:group:cancellation_law}
 若 $\Group$ 為一個群，則 $\GroupSet$ 滿足消去律。即對於所有 $a,b,c\in{\GroupSet}$，若
@@ -159,7 +172,78 @@ a &= ea                                    &\text{群的定義 \ref{def:group:g3
 由定理 \ref{thm:algebra:identity_inverse_equilibrium} 可知唯一解為 $x=a^{-1}b$ 且 $y=ba^{-1}$。
 \end{proof}
 
+\begin{mydef}[阿貝爾群]
+\label{def:group:abelian_group}
+一個群 $\Group$，若對所有 $a,b\in{\GroupSet}$ 都滿足 $ab=ba$，則 $\GroupSet$ 稱為\textbf{阿貝爾群 (Abelian group)}，又稱\textbf{交換群}。
+\end{mydef}
+\begin{myexample}
+$\Algebra[\Int][+]$ 是一個交換群，$\Algebra[\Mat{\Real}][\cdot]$ 就不是，反例：
+\begin{align*}
+A=\left(\begin{array}{cc}
+1 & 0\\
+0 & 0
+\end{array}\right),
+B=\left(\begin{array}{cc}
+0 & 1\\
+0 & 0
+\end{array}\right)\\
+AB=\left(\begin{array}{cc}
+0 & 1\\
+0 & 0
+\end{array}\right)\neq\left(\begin{array}{cc}
+0 & 0\\
+0 & 0
+\end{array}\right)=BA
+\end{align*}
+。
+\end{myexample}
+
+\begin{mydef}[半群和單半群]
+\label{def:group:semigroup_and_monoid}
+一個代數結構 $\Group$ 若滿足 \ref{def:group:g1} 和 \ref{def:group:g2}，則 $\GroupSet$ 稱為\textbf{半群 (Semigroup)}。若 $\Group$ 滿足 \ref{def:group:g1}、\ref{def:group:g2}、\ref{def:group:g3}，則 $\GroupSet$ 稱為\textbf{單半群 (Monoid)}。
+\end{mydef}
+
+\begin{mydef}[有限群]
+\label{def:group:finite_group}
+一個群 $\Group$ 若 $|G|<\infty$，則 $\GroupSet$ 稱為\textbf{有限群 (Finite group)}。
+\end{mydef}
+
 \section{子群}
+
+\begin{mydef}[子群]
+\label{def:group:subgroup}
+一個群 $\Group$ 上，若 $\SubGroup$ 是一個群且 $\SubGroupSet\subseteq{\GroupSet}$、$\SubGroupSet\neq{\emptyset}$，則 $\SubGroup$ 被稱為 $G$ 的\textbf{子群 (Subgroup)}。
+\end{mydef}
+\begin{mynote*}
+$\GroupRelation[\GroupSet]$ 和 $\GroupRelation[\SubGroupSet]$ 要是相同的。
+\end{mynote*}
+
+\begin{mylma}[實用版子群]
+\label{lma:group:two_rule_subgroup}
+一個群 $\Group$ 上有一個非空子集 $\SubGroupSet$，$\SubGroupSet$ 滿足以下條件
+\begin{enumerate}
+\item 對於任意 $a,b\in{\SubGroupSet}$，$ab\in{\SubGroupSet}$
+\item 對於任意 $a\in{\SubGroupSet}$，存在 $a^{-1}\in{\SubGroupSet}$
+\end{enumerate}
+若且唯若 $\SubGroup$ 是一個子群。
+\end{mylma}
+\begin{mynote*}
+事實上這兩個規則就是驗證 \ref{def:group:g1} 和 \ref{def:group:g4}。
+\end{mynote*}
+
+\begin{mylma}[精簡版子群]
+\label{lma:group:one_rule_subgroup}
+一個群 $\Group$ 上有一個非空子集 $\SubGroupSet$，對於任意 $a,b\in{\SubGroupSet}$，$ab^{-1}\in{\SubGroupSet}$ 若且唯若 $\SubGroup$ 是一個子群。
+\end{mylma}
+
+\begin{mypropo}
+\label{pro:group:two_subgroup_intersection}
+一個群 $\Group$ 上若有兩個子群 $\SubGroupSet_1$、$\SubGroupSet_2$，則 ${\SubGroupSet_1}\cap{\SubGroupSet_2}$ 是 $\GroupSet$ 的子群。
+\end{mypropo}
+
+\begin{mythm}[有限子群]
+一個有限群 $\Group$ 上有一個非空子集 $\SubGroupSet$，對於任意 $a,b\in{\SubGroupSet}$，$ab\in{\SubGroupSet}$ 若且唯若 $\SubGroup$ 是一個子群。
+\end{mythm}
 
 \ifx \allfiles \undefined
 \printindex[noun]

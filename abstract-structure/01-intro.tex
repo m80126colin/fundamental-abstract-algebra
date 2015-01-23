@@ -52,6 +52,7 @@
 \newtheorem*{mydef*}{定義}
 \newtheorem{myrule}[mydef]{原理}
 \newtheorem{mythm}[mydef]{定理}
+\newtheorem{mylma}[mydef]{引理}
 \newtheorem{mypropo}[mydef]{性質}
 \newtheorem{mycorol}[mydef]{推論}
 \newtheorem{myexample}[mydef]{範例}
@@ -195,10 +196,30 @@ fg=I_B
 做為習題。
 \end{proof}
 
+\begin{mythm}[反函數唯一性]
+\label{thm:intro:inverse_function_uniqueness}
+\label{exe:intro:inverse_function_uniqueness}
+兩集合 $A$、$B$ 上有一函數 $\Func{f}{A}{B}$，若 $f$ 是可逆函數，則 $f$ 的反函數是唯一的。
+\end{mythm}
+\begin{proof}
+做為習題。
+\end{proof}
+
+\begin{mythm}
+\label{thm:intro:inverse_function_invertible}
+\label{exe:intro:inverse_function_invertible}
+兩集合 $A$、$B$ 上有一函數 $\Func{f}{A}{B}$，若 $f$ 是可逆函數，則反函數 $\Func{f^{-1}}{B}{A}$ 也是可逆函數。
+\end{mythm}
+\begin{proof}
+做為習題。
+\end{proof}
+
 \section*{習題}
 
 \begin{enumerate}
 \item 證明定理 \ref{exe:intro:bijective_iff_invertible}。
+\item 證明定理 \ref{exe:intro:inverse_function_uniqueness}。
+\item 證明定理 \ref{exe:intro:inverse_function_invertible}。
 \end{enumerate}
 
 \ifx \allfiles \undefined

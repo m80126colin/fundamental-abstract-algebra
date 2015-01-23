@@ -52,6 +52,7 @@
 \newtheorem*{mydef*}{定義}
 \newtheorem{myrule}[mydef]{原理}
 \newtheorem{mythm}[mydef]{定理}
+\newtheorem{mylma}[mydef]{引理}
 \newtheorem{mypropo}[mydef]{性質}
 \newtheorem{mycorol}[mydef]{推論}
 \newtheorem{myexample}[mydef]{範例}
@@ -685,10 +686,9 @@ z &= \Op{a^{'}}{z}           &z\text{ 是零元素，因此 }\Op{a^{'}}{z}=z\\
 兩個同類的代數結構 $\Algebra[\defaultSet][{\defaultNRelation[\defaultSet,1][\defaultSet,n]}]$、$\Algebra[T][{\defaultNRelation[T,1][T,n]}]$ 若能找到一函數 $\Func{f}{\defaultSet}{T}$ 滿足以下條件
 \begin{enumerate}
 \item $\defaultSet$ 和 $T$ 同態
-\item $f$ 是一對一函數
-\item $f$ 是映成函數
+\item $f$ 是雙射函數
 \end{enumerate}
-則稱 $\defaultSet$ 和 $T$ \textbf{同構 (Isomorphism)}，$f$ 稱為同構函數。
+則稱 $\defaultSet$ 和 $T$ \textbf{同構 (Isomorphism)}，記為 $S\cong{T}$，$f$ 稱為同構函數。
 \end{mydef}
 
 \section*{習題}
