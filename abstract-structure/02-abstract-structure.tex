@@ -80,7 +80,7 @@
 \item 整數加法 $\Func{+}{\Int\times{\Int}}{\Int}$
 \item 實數乘法 $\Func{\cdot}{\Real^2}{\Real}$
 \item 實係數矩陣乘法 $\Func{\cdot}{\Mat[m][n]{\Real}\times\Mat[n][p]{\Real}}{\Mat[m][p]{\Real}}$
-\item 充要條件 $\Func{\Leftrightarrow}{\mathcal{L}\times{\mathcal{L}}}{\left\{{\True,\False}\right\}}$
+\item 充要條件 $\Func{\Leftrightarrow}{{\LogicSet}\times{\LogicSet}}{\left\{{\True,\False}\right\}}$
 \item $\mathcal{O}{(n^2)}$ 的 LCS 演算法 $\Func{\textsc{LCS}}{{{\{0,1\}}^{m}}\times{{\{0,1\}}^{n}}}{{\{0,1\}}^{k}}$
 \end{enumerate}
 \end{myexample}
@@ -117,6 +117,30 @@
 \label{def:algebra:closure}
 一個代數結構 $\Algebra$ 中，若對於所有 $a,b\in{\defaultSet}$，使得 $\Op{a}{b}\in{S}$，則稱二元運算 $\defaultRelation$ 對 $\defaultSet$ 滿足\textbf{封閉律 (Closure)}。
 \end{mydef}
+
+\begin{mydef}[結合律]
+\label{def:algebra:associativity}
+一個封閉的代數結構 $\Algebra$ 中，若對於所有 $a,b,c\in{\defaultSet}$，使得 $\Op{(\Op{a}{b})}{c}=\Op{a}{(\Op{b}{c})}$，則稱二元運算 $\defaultRelation$ 對 $\defaultSet$ 具有\textbf{結合律 (Associativity, Associative property)}。
+\end{mydef}
+
+\begin{mydef}[交換律]
+\label{def:algebra:commutativity}
+一個封閉的代數結構 $\Algebra$ 中，若對於所有 $a,b\in{\defaultSet}$，使得 $\Op{a}{b}=\Op{b}{a}$，則稱二元運算 $\defaultRelation$ 對 $\defaultSet$ 具有\textbf{交換律 (Commutativity, Commutative property)}。
+\end{mydef}
+
+\begin{myexample}
+說明下列代數結構是否有交換律。
+\begin{enumerate}
+\item $\Algebra[\NonNegInt]$，$\forall{a,b}\in{\NonNegInt}$，$\Op{a}{b}=a^b$
+\end{enumerate}
+\end{myexample}
+\begin{proof}
+\begin{enumerate}
+\item[]
+\item 計算 $\Op{3}{2}=3^2=9$、$\Op{2}{3}=2^3=8$，因為 $9\neq{8}$，因此 $\Op{3}{2}\neq{\Op{2}{3}}$，$\defaultRelation$ 不具交換律。
+\end{enumerate}
+\end{proof}
+
 \begin{myexample}
 說明下列代數結構是否滿足封閉律。
 \begin{enumerate}
@@ -141,28 +165,6 @@
 \end{enumerate}
 \end{proof}
 
-\begin{mydef}[結合律]
-\label{def:algebra:associativity}
-一個封閉的代數結構 $\Algebra$ 中，若對於所有 $a,b,c\in{\defaultSet}$，使得 $\Op{(\Op{a}{b})}{c}=\Op{a}{(\Op{b}{c})}$，則稱二元運算 $\defaultRelation$ 對 $\defaultSet$ 具有\textbf{結合律 (Associativity, Associative property)}。
-\end{mydef}
-
-\begin{mydef}[交換律]
-\label{def:algebra:commutativity}
-一個封閉的代數結構 $\Algebra$ 中，若對於所有 $a,b\in{\defaultSet}$，使得 $\Op{a}{b}=\Op{b}{a}$，則稱二元運算 $\defaultRelation$ 對 $\defaultSet$ 具有\textbf{交換律 (Commutativity, Commutative property)}。
-\end{mydef}
-\begin{myexample}
-說明下列代數結構是否有交換律。
-\begin{enumerate}
-\item $\Algebra[\NonNegInt]$，$\forall{a,b}\in{\NonNegInt}$，$\Op{a}{b}=a^b$
-\end{enumerate}
-\end{myexample}
-\begin{proof}
-\begin{enumerate}
-\item[]
-\item 計算 $\Op{3}{2}=3^2=9$、$\Op{2}{3}=2^3=8$，因為 $9\neq{8}$，因此 $\Op{3}{2}\neq{\Op{2}{3}}$，$\defaultRelation$ 不具交換律。
-\end{enumerate}
-\end{proof}
-
 \begin{mydef}[吸收律]
 \label{def:algebra:absorption_law}
 一個封閉的代數結構 $\Algebra[\defaultSet][\defaultTwoRelation]$ 中，若對於所有 $a,b\in{\defaultSet}$，使得
@@ -175,6 +177,9 @@
 \begin{mynote*}
 吸收律是定義在\textbf{一對}二元運算上，因此不能單獨定義一個運算子具有吸收律。
 \end{mynote*}
+\begin{myexample}
+一個邏輯語句與 or 運算、and 運算 $(\LogicSet,\LogicJoin,\LogicMeet)$ 有吸收律，因為對於 $a$
+\end{myexample}
 
 \begin{mydef}[分配律]
 \label{def:algebra:distributivity}
@@ -188,6 +193,14 @@
 \begin{mynote*}
 儘管 $\defaultFirstRelation$ 對 $\defaultSecondRelation$ 有分配律，但 $\defaultSecondRelation$ \textbf{未必}對 $\defaultFirstRelation$ 有分配律。
 \end{mynote*}
+
+\begin{myexample}
+整數加法與乘法 $(\Int,+,\cdot)$ 中乘法對加法有分配律，加法對乘法則無。
+\begin{align*}
+2\cdot{(3+4)}&={(2\cdot{3})}+{(2\cdot{4})}\\
+2+{(3\cdot{4})}&\neq{(2+3)\cdot{(2+4)}}
+\end{align*}
+\end{myexample}
 
 \subsection{單位元素}
 
@@ -244,11 +257,11 @@ e_1=\Op{e_1}{e_2}=e_2
 
 \begin{mydef}[反元素]
 \label{def:algebra:inverse}
-一個封閉的代數結構 $\Algebra$ 存在單位元素 $e\in{\defaultSet}$，若對 $a\in{\defaultSet}$，
+一個封閉的代數結構 $\Algebra$ 中，若
 \begin{itemize}
-\item 存在 $b_l\in{\defaultSet}$，$\Op{b_l}{a}=e$，則 $b_l$ 稱為 $a$ 的\textbf{左反元素 (Left inverse)}
-\item 存在 $b_r\in{\defaultSet}$，$\Op{a}{b_r}=e$，則 $b_r$ 稱為 $a$ 的\textbf{右反元素 (Right inverse)}
-\item 存在 $b\in{\defaultSet}$，$\Op{b}{a}=\Op{a}{b}=e$，則 $b$ 稱為 $a$ 的\textbf{反元素 (Inverse)}，$a$ 又稱\textbf{可逆元素 (Invertible element)}
+\item 存在左單位元素 $e_l\in{\defaultSet}$，使得 $a,b_l\in{\defaultSet}$，$\Op{b_l}{a}=e_l$，則 $b_l$ 稱為 $a$ 的\textbf{左反元素 (Left inverse)}
+\item 存在右單位元素 $e_r\in{\defaultSet}$，使得 $a,b_r\in{\defaultSet}$，$\Op{a}{b_r}=e_r$，則 $b_r$ 稱為 $a$ 的\textbf{右反元素 (Right inverse)}
+\item 存在單位元素 $e\in{\defaultSet}$，使得 $a,b\in{\defaultSet}$，$\Op{b}{a}=\Op{a}{b}=e$，則 $b$ 稱為 $a$ 的\textbf{反元素 (Inverse)}，$a$ 又稱\textbf{可逆元素 (Invertible element)}
 \end{itemize}
 若對所有 $a\in{\defaultSet}$ 都有反元素，則稱 $\defaultRelation$ 在 $\defaultSet$ 上有\textbf{反元素 (Inverse property)}。
 \end{mydef}
@@ -263,6 +276,7 @@ e_1=\Op{e_1}{e_2}=e_2
 
 \begin{mythm}[反元素存在性]
 \label{thm:algebra:inverse_existence}
+\label{exe:algebra:inverse_existence}
 一個封閉的代數結構 $\Algebra$ 存在單位元素 $e$，且 $\defaultRelation$ 具有結合律，若 $a\in{\defaultSet}$ 存在左反元素 $b_l$，右反元素 $b_r$，則 $b_l=b_r$，即反元素存在。
 \end{mythm}
 \begin{proof}
@@ -271,10 +285,49 @@ e_1=\Op{e_1}{e_2}=e_2
 
 \begin{mythm}[反元素唯一性]
 \label{thm:algebra:inverse_uniqueness}
+\label{exe:algebra:inverse_uniqueness}
 一個封閉的代數結構 $\Algebra$ 存在單位元素 $e$，且 $\defaultRelation$ 具有結合律，若 $a\in{\defaultSet}$ 存在反元素，則反元素唯一。
 \end{mythm}
 \begin{proof}
 做為習題。
+\end{proof}
+
+\begin{mydef}[反元素通用記號]
+\label{def:algebra:inverse_general_notation}
+一個封閉的代數結構 $\Algebra$ 中，若對 $a\in{\defaultSet}$ 有反元素，則此反元素記為 $a^{'}$。
+\end{mydef}
+
+\begin{mypropo}[反元素性質]
+\label{pro:algebra:inverse_property}
+一個封閉的代數結構 $\Algebra$ 若滿足以下條件：
+\begin{itemize}
+\item 有結合律
+\item 有單位元素 $e$
+\item 對所有 $a\in{\defaultSet}$ 都有反元素 $a^{'}$
+\end{itemize}
+則對所有 $a,b\in{\defaultSet}$ 有以下特性：
+\begin{enumerate}
+\item ${\left({a^{'}}\right)}^{'}=a$
+\item \label{exe:algebra:inverse_property} ${\left({\Op{a}{b}}\right)}^{'}=\Op{b^{'}}{a^{'}}$
+\end{enumerate}
+\end{mypropo}
+\begin{proof}
+\begin{enumerate}
+\item 依照定義，我們知道 $a^{'}$ 是 $a$ 的反元素、${\left({a^{'}}\right)}^{'}$ 是 $a^{'}$ 的反元素，因此
+\begin{align*}
+\Op{a^{'}}{a}&=\Op{a}{a^{'}}=e\\
+\Op{{({a^{'}})}^{'}}{a^{'}}&=\Op{a^{'}}{{({a^{'}})}^{'}}=e
+\end{align*}
+則我們可以推導出：
+\begin{align*}
+{({a^{'}})}^{'} &= \Op{{({a^{'}})}^{'}}{e}               &e\text{ 是單位元素}\\
+                &= \Op{{({a^{'}})}^{'}}{(\Op{a^{'}}{a})} &\Op{a^{'}}{a}=e\\
+                &= \Op{(\Op{{({a^{'}})}^{'}}{a^{'}})}{a} &\text{結合律}\\
+                &= \Op{e}{a}                             &\Op{{({a^{'}})}^{'}}{a^{'}}=e\\
+                &= a                                     &e\text{ 是單位元素}
+\end{align*}
+\item 做為習題。
+\end{enumerate}
 \end{proof}
 
 \begin{mythm}
@@ -350,6 +403,7 @@ e_1=\Op{e_1}{e_2}=e_2
 
 \begin{mythm}[零元素存在性]
 \label{thm:algebra:zero_existence}
+\label{exe:algebra:zero_existence}
 一個封閉的代數結構 $\Algebra$ 具有結合律，若存在左零元素 $z_l$，右零元素 $z_r$，則 $z_l=z_r$，即零元素存在。
 \end{mythm}
 \begin{proof}
@@ -358,6 +412,7 @@ e_1=\Op{e_1}{e_2}=e_2
 
 \begin{mythm}[零元素唯一性]
 \label{thm:algebra:zero_uniqueness}
+\label{exe:algebra:zero_uniqueness}
 一個封閉的代數結構 $\Algebra$ 具有結合律，若存在零元素，則零元素唯一。
 \end{mythm}
 \begin{proof}
@@ -381,6 +436,7 @@ a &= \Op{a}{e} &e\text{ 是單位元素}\\
 
 \begin{mypropo}
 \label{pro:algebra:zero_no_inverse}
+\label{exe:algebra:zero_no_inverse}
 一個封閉的代數結構 $\Algebra$ 存在單位元素 $e$，若 $\defaultRelation$ 在 $\defaultSet$ 上有零元素 $z$ 且 $z\neq{e}$，則 $z$ 沒有反元素。
 \end{mypropo}
 \begin{proof}
@@ -403,13 +459,13 @@ a &= \Op{a}{e} &e\text{ 是單位元素}\\
 若 $a,b\in{\defaultSet}$ 是零因子，則 $a,b$ 沒有反元素。
 \end{mythm}
 \begin{proof}
-因為 $a,b$ 是零因子，所以 $\Op{a}{b}=z$ 且 $a,b\neq{z}$。先假設 $a$ 有反元素 $c\in{\defaultSet}$，也就是 $\Op{a}{c}=\Op{c}{a}=e$，我們知道
+因為 $a,b$ 是零因子，所以 $\Op{a}{b}=z$ 且 $a,b\neq{z}$。先假設 $a$ 有反元素 $a^{'}\in{\defaultSet}$，我們知道
 \begin{align*}
-z &= \Op{c}{z}           &z\text{ 是零元素，因此 }\Op{c}{z}=z\\
-  &= \Op{c}{(\Op{a}{b})} &\Op{a}{b}=z\\
-  &= \Op{(\Op{c}{a})}{b} &\text{結合律}\\
-  &= \Op{e}{b}           &c\text{ 是 }a\text{ 的反元素，因此 }\Op{c}{a}=e\\
-  &= b                   &e\text{ 是單位元素}
+z &= \Op{a^{'}}{z}           &z\text{ 是零元素，因此 }\Op{a^{'}}{z}=z\\
+  &= \Op{a^{'}}{(\Op{a}{b})} &\Op{a}{b}=z\\
+  &= \Op{(\Op{a^{'}}{a})}{b} &\text{結合律}\\
+  &= \Op{e}{b}               &a^{'}\text{ 是 }a\text{ 的反元素，因此 }\Op{a^{'}}{a}=e\\
+  &= b                       &e\text{ 是單位元素}
 \end{align*}
 我們求出 $z=b$，與原來的前提 ($a,b\neq{z}$) 矛盾。同理，$b$ 也沒有反元素。
 \end{proof}
@@ -426,7 +482,8 @@ z &= \Op{c}{z}           &z\text{ 是零元素，因此 }\Op{c}{z}=z\\
 
 \begin{mythm}[消去律性質]
 \label{thm:algebra:cancellation_law}
-一個封閉的代數結構 $\Algebra$ 滿足以下條件：
+\label{exe:algebra:cancellation_law}
+一個封閉的代數結構 $\Algebra$ 若滿足以下條件：
 \begin{itemize}
 \item 有結合律
 \item 有單位元素 $e$
@@ -436,18 +493,19 @@ z &= \Op{c}{z}           &z\text{ 是零元素，因此 }\Op{c}{z}=z\\
 \end{mythm}
 \begin{proof}
 根據定義 \ref{def:algebra:cancellation_law}，我們要驗證 $\defaultRelation$ 有左消去律和右消去律。
-\paragraph{左消去律}對於所有 $a,b,c\in{\defaultSet}$，驗證 $\Op{a}{b}=\Op{a}{c}$ 是否能推導出 $b=c$。假設 $a$ 有反元素 $d\in{\defaultSet}$，使得 $\Op{d}{a}=\Op{a}{d}=e$，則
+\paragraph{左消去律}對於所有 $a,b,c\in{\defaultSet}$，驗證 $\Op{a}{b}=\Op{a}{c}$ 是否能推導出 $b=c$。假設 $a$ 有反元素 $a^{'}\in{\defaultSet}$，則
 \begin{align*}
-\Op{a}{b}=\Op{a}{c} &\Rightarrow \Op{d}{(\Op{a}{b})}=\Op{d}{(\Op{a}{c})} &\text{等式兩邊同時與 }d\text{ 做運算}\\
-                    &\Rightarrow \Op{(\Op{d}{a})}{b}=\Op{(\Op{d}{a})}{c} &\text{結合律}\\
-                    &\Rightarrow \Op{e}{b}=\Op{e}{c}                     &d\text{ 是 }a\text{ 的反元素}\\
-                    &\Rightarrow b=c                                     &e\text{ 是單位元素}
+\Op{a}{b}=\Op{a}{c} &\Rightarrow \Op{a^{'}}{(\Op{a}{b})}=\Op{a^{'}}{(\Op{a}{c})} &\text{等式兩邊同時與 }a^{'}\text{ 做運算}\\
+                    &\Rightarrow \Op{(\Op{a^{'}}{a})}{b}=\Op{(\Op{a^{'}}{a})}{c} &\text{結合律}\\
+                    &\Rightarrow \Op{e}{b}=\Op{e}{c}                             &a^{'}\text{ 是 }a\text{ 的反元素}\\
+                    &\Rightarrow b=c                                             &e\text{ 是單位元素}
 \end{align*}
 \paragraph{右消去律}做為習題。
 \end{proof}
 
 \begin{mythm}
 \label{thm:algebra:identity_inverse_equilibrium}
+\label{exe:algebra:identity_inverse_equilibrium}
 一個封閉的代數結構 $\Algebra$ 若滿足結合律，則以下兩個敘述是等價的：
 \begin{enumerate}
 \item \label{thm:algebra:id_inv_eq_first}
@@ -455,29 +513,29 @@ z &= \Op{c}{z}           &z\text{ 是零元素，因此 }\Op{c}{z}=z\\
     \item $e$ 是單位元素
     \item 對所有 $a\in{\defaultSet}$，存在反元素
     \end{enumerate}
-\item \label{thm:algebra:id_inv_eq_second} 對於任意 $a,b\in{\defaultSet}$，$x,y$ 是未知數，方程式 $\Op{a}{x}=b$ 和 $\Op{y}{a}=b$ 存在唯一解。
+\item \label{thm:algebra:id_inv_eq_second} 對於任意 $a,b\in{\defaultSet}$，$x,y$ 是在 $\defaultSet$ 的未知數，方程式 $\Op{a}{x}=b$ 和 $\Op{y}{a}=b$ 存在唯一解。
 \end{enumerate}
 \end{mythm}
 \begin{proof}
 \begin{enumerate}
 \item ($\Rightarrow$) 方向：已知有單位元素 $e$ 和反元素，我們要證存在性和唯一性。
     \begin{enumerate}
-    \item 先證存在性，我們只要找出一組解酒可以證明存在性。假設 $c\in{\defaultSet}$ 是 $a$ 的反元素，我們可以找出當 $x=\Op{c}{b}$ 時，
+    \item 先證存在性，我們只要找出一組解就可以證明存在性。假設 $a$ 有反元素 $a^{'}\in{\defaultSet}$，我們可以找出當 $x=\Op{a^{'}}{b}$ 時，
     \begin{align*}
-    \Op{a}{x} &= \Op{a}{(\Op{c}{b})} &x=\Op{c}{b}\\
-              &= \Op{(\Op{a}{c})}{b} &\text{結合律}\\
-              &= \Op{e}{b}           &c\text{ 是 }a\text{ 的反元素}\\
-              &= b                   &e\text{ 是單位元素}
+    \Op{a}{x} &= \Op{a}{(\Op{a^{'}}{b})} &x=\Op{a^{'}}{b}\\
+              &= \Op{(\Op{a}{a^{'}})}{b} &\text{結合律}\\
+              &= \Op{e}{b}               &a^{'}\text{ 是 }a\text{ 的反元素}\\
+              &= b                       &e\text{ 是單位元素}
     \end{align*}
-    \item 再證唯一性，假設 $x$ 有兩個解 $d$ 和 $d^{'}$，亦即 $\Op{a}{d}=b=\Op{a}{d^{'}}$，則
+    \item 再證唯一性，假設 $x$ 有兩個解 $c$ 和 $d$，亦即 $\Op{a}{c}=b=\Op{a}{d}$，則
     \begin{align*}
-    d &= \Op{e}{d}               &e\text{ 是單位元素}\\
-      &= \Op{(\Op{c}{a})}{d}     &\Op{c}{a}=e\\
-      &= \Op{c}{(\Op{a}{d})}     &\text{結合律}\\
-      &= \Op{c}{(\Op{a}{d^{'}})} &\Op{a}{d}=b=\Op{a}{d^{'}}\\
-      &= \Op{(\Op{c}{a})}{d^{'}} &\text{結合律}\\
-      &= \Op{e}{d^{'}}           &\Op{c}{a}=e\\
-      &= d^{'}                   &e\text{ 是單位元素}
+    c &= \Op{e}{c}               &e\text{ 是單位元素}\\
+      &= \Op{(\Op{a^{'}}{a})}{c} &\Op{a^{'}}{a}=e\\
+      &= \Op{a^{'}}{(\Op{a}{c})} &\text{結合律}\\
+      &= \Op{a^{'}}{(\Op{a}{d})} &\Op{a}{c}=b=\Op{a}{d}\\
+      &= \Op{(\Op{a^{'}}{a})}{d} &\text{結合律}\\
+      &= \Op{e}{d}               &\Op{a^{'}}{a}=e\\
+      &= d                       &e\text{ 是單位元素}
     \end{align*}
     \item 同理，也可證明 $y$ 存在唯一解 $\Op{b}{c}$。
     \end{enumerate}
@@ -486,6 +544,87 @@ z &= \Op{c}{z}           &z\text{ 是零元素，因此 }\Op{c}{z}=z\\
 \end{proof}
 
 \subsection{符號簡化}
+
+\newcommand{\opRelation}{\ensuremath{\mathfrak{R}}}
+\newcommand{\opR}{\mathop{\vphantom{\sum}\mathchoice
+  {\vcenter{\hbox{\huge \opRelation}}}
+  {\vcenter{\hbox{\Large \opRelation}}}
+  {\mathrm{\opRelation}}
+  {\mathrm{\opRelation}}
+}\displaylimits}
+
+\begin{mydef}[連運算記號]
+\label{def:algebra:accumulating_relational_notation}
+一個封閉的代數結構 $\Algebra$ 中，對於任意 $a_1,\cdots,a_n\in{\defaultSet}$，定義運算 $\opR^{n}_{i=1}{a_i}$，其中 $n\in{\PosInt}$：
+\begin{enumerate}
+\item 當 $n=1$ 時，$\opR^{n}_{i=1}{a_i}=a_1$
+\item 當 $n>1$ 時，$\opR^{n}_{i=1}{a_i}=\Op{a_1}{(\Op{a_2}{(\Op{\cdots}{a_n})})}=\Op{a_1}{(\opR^{n}_{i=2}{a_i})}$
+\end{enumerate}
+\end{mydef}
+
+\begin{mypropo}[連運算性質]
+\label{pro:algebra:accumulating_relational_notation}
+\label{exe:algebra:accumulating_relational_notation}
+一個封閉的代數結構 $\Algebra$ 中若滿足結合律，則對於 $n,m\in{\PosInt}$、$n<m$ 且 $a_1,\cdots,a_{n+m}\in{\defaultSet}$ 滿足
+\begin{align*}
+\Op{(\opR^{n}_{i=1}{a_i})}{(\opR^{n+m}_{j=n+1}{a_j})}=\opR^{n+m}_{k=1}{a_k}
+\end{align*}
+\end{mypropo}
+\begin{proof}
+做為習題。
+\end{proof}
+
+\begin{mydef}
+\label{def:algebra:general_associativity}
+一個封閉的代數結構 $\Algebra$ 中，對於任意 $a_1,\cdots,a_n\in{\defaultSet}$ 做運算，且這 $n$ 個元素不得改變次序，所有以某個順序運算 $a_1,\cdots,a_n$ 的集合，我們記為 $\Phi(a_1,\cdots,a_n)$。
+\end{mydef}
+\begin{myexample}
+假設 $a_1,a_2,a_3,a_4\in{\defaultSet}$，則 $\Phi(a_1,a_2,a_3,a_4)$ 有 5 個元素：
+\begin{enumerate}
+\item $\Op{a_1}{(\Op{a_2}{(\Op{a_3}{a_4})})}$
+\item $\Op{a_1}{(\Op{(\Op{a_2}{a_3})}{a_4})}$
+\item $\Op{(\Op{a_1}{a_2})}{(\Op{a_3}{a_4})}$
+\item $\Op{(\Op{a_1}{(\Op{a_2}{a_3})})}{a_4}$
+\item $\Op{(\Op{(\Op{a_1}{a_2})}{a_3})}{a_4}$
+\end{enumerate}
+\end{myexample}
+
+\begin{mythm}[廣義結合律]
+\label{thm:algebra:general_associativity}
+一個封閉的代數結構 $\Algebra$ 中若滿足結合律，對於任意 $a_1,\cdots,a_n\in{\defaultSet}$，則所有 $\phi\in{\Phi(a_1,\cdots,a_n)}$，$\phi=\opR^{n}_{i=1}{a_i}$。
+\end{mythm}
+\begin{proof}
+我們用強數學歸納法證明：
+\begin{enumerate}
+\item 先證明 $k=1$，對所有 $\phi\in{\Phi(a_1)=\{a_1\}}$，$\phi=a_1=\opR^{k}_{i=1}{a_i}$
+\item 假設對所有 $1\leq{k}\leq{n}$ 都滿足此性質，接著證明當 $k=n+1$ 時，對於所有 $\phi\in{\Phi(a_1,\cdots,a_n)}$，因為 $\defaultRelation$ 是二元運算，最後必有 $\phi_{l}\in{\Phi(a_1,\cdots,a_x)}$ 且 $\phi_{r}\in{\Phi(a_{x+1},\cdots,a_{n+1})}$，$1\leq{x}\leq{n+1}$，使得
+\begin{align*}
+\phi &= \Op{\phi_{l}}{\phi_{r}}                               &\\
+     &= \Op{(\opR^{x}_{i=1}{a_i})}{(\opR^{n+1}_{j=x+1}{a_j})} &\text{強數學歸納法假設}\\
+     &= \opR^{n+1}_{i=1}{a_i}                                 &\text{根據性質 \ref{pro:algebra:accumulating_relational_notation}}
+\end{align*}
+\end{enumerate}
+\end{proof}
+\begin{mynote*}
+也就是說，一封閉的代數結構 $\Algebra$ 有結合律，則 $a_1,\cdots,a_n\in{\defaultSet}$ 只要前後次序不變，則結果相同。
+\end{mynote*}
+
+\begin{mydef}[倍運算記號]
+\label{def:algebra:multiplex_relational_notation}
+一個封閉的代數結構 $\Algebra$ 中若滿足以下條件：
+\begin{itemize}
+\item 結合律
+\item 有單位元素 $e$
+\end{itemize}
+則對於任意 $a\in{\defaultSet}$，定義運算 $\opR^{n}{a}$，其中 $n\in{\PosInt}$：
+\begin{enumerate}
+\item 當 $n=1$，$\opR^{n}{a}=\opR^{1}{a}=a$
+\item 當 $n>1$，$\opR^{n}{a}=\Op{a}{(\opR^{n-1}{a})}$
+\end{enumerate}
+\end{mydef}
+\begin{mynote*}
+根據廣義結合律的性質 \ref{pro:algebra:accumulating_relational_notation}，無論這幾個 $a$ 以何種順序運算，結果皆相同。
+\end{mynote*}
 
 \begin{mydef}[單位元素記號]
 \label{def:algebra:identity_notation}
@@ -504,64 +643,68 @@ z &= \Op{c}{z}           &z\text{ 是零元素，因此 }\Op{c}{z}=z\\
 
 \begin{mydef}[反元素記號]
 \label{def:algebra:inverse_notation}
-一個封閉的代數結構 $\Algebra$ 存在單位元素 $e$，且所有 $a\in{\defaultSet}$ 均有反元素 $b\in{\defaultSet}$，若
+一個封閉的代數結構 $\Algebra$ 存在單位元素 $e$，且所有 $a\in{\defaultSet}$ 均有反元素 $a^{'}\in{\defaultSet}$，若
 \begin{itemize}
-\item $\defaultRelation$ 為加法 $\defaultAdd$，則 $b$ 為\textbf{加法反元素 (Additive inverse)}，此時 $b$ 記為 $-a$。
-\item $\defaultRelation$ 為乘法 $\defaultTimes$，則 $b$ 為\textbf{乘法反元素 (Multiplicative inverse)}，此時 $b$ 記為 $a^{-1}$。
+\item $\defaultRelation$ 為加法 $\defaultAdd$，則 $a^{'}$ 為\textbf{加法反元素 (Additive inverse)}，此時 $a^{'}$ 記為 $-a$。
+\item $\defaultRelation$ 為乘法 $\defaultTimes$，則 $a^{'}$ 為\textbf{乘法反元素 (Multiplicative inverse)}，此時 $a^{'}$ 記為 $a^{-1}$。
 \end{itemize}
 \end{mydef}
 \begin{mynote*}
 同樣地，$-a$ 和 $a^{-1}$ 只是單純的符號，不要和減法與倒數搞混。
 \end{mynote*}
 
-\begin{mydef}[連加記號]
-\label{def:algebra:accumulating_additive_notation}
-若一個封閉的代數結構 $\AddAlgebra$ 的二元運算為加法 $\defaultAdd$，且滿足以下條件：
-\begin{itemize}
-\item 有單位元素 $\defaultZero$
-\item 對所有 $a\in{\defaultSet}$ 有反元素 $-a$
-\end{itemize}
-，則定義連加記號 $ka$，$k\in{\Int}$：
-\begin{enumerate}
-\item $k=0$ 時，$0a=\defaultZero$
-\item $k>0$ 時，$ka=\Op[\defaultAdd]{a}{{(k-1)}a}$
-\item $k<0$ 時，
-\end{enumerate}
-\end{mydef}
-
 \subsection{其他性質}
-
-\begin{mydef}[連乘]
-在一個封閉的代數結構 $\Algebra$ 中，對所有 $a\in{\defaultSet}$ 定義 $a^k$，$k\in{\PosInt}$：
-\begin{enumerate}
-\item 若 $k=1$，則 $a^k=a^1=a$
-\item 若 $k>1$，則 $a^k=\Op{a}{a^{k-1}}$
-\end{enumerate}
-\end{mydef}
 
 \begin{mydef}[冪等元素與冪等律]
 \label{def:algebra:idempotent}
 一個封閉的代數結構 $\Algebra$ 中，若有 $a\in{\defaultSet}$，使得 $\Op{a}{a}=a$，則 $a$ 稱為\textbf{冪等元素 (Idempotent element)}。若所有 $a\in{\defaultSet}$ 都是冪等元素，則稱二元運算 $\defaultRelation$ 在 $\defaultSet$ 上滿足\textbf{冪等律 (Idempotent)}。
 \end{mydef}
 
-\begin{mydef}[冪零律]
+\begin{mydef}[冪零元素與冪零律]
 \label{def:algebra:nilpotent}
-一個封閉的代數結構 $\Algebra$ 中，若對於所有 $a\in{\defaultSet}$，使得 $\Op{a}{a}=a$，則稱二元運算 $\defaultRelation$ 對 $\defaultSet$ 滿足\textbf{冪等律 (Idempotent)}。
+一個封閉的代數結構 $\Algebra$ 中存在零元素 $z$，若 $a\in{\defaultSet}$，使得 $\opR^{k}{a}=z$，$k\in{\PosInt}$，則 $a$ 稱為\textbf{冪零元素 (Nilpotent element)}。則稱二元運算 $\defaultRelation$ 對 $\defaultSet$ 滿足\textbf{冪零律 (Nilpotent)}。
 \end{mydef}
 
 \section{同態與同構}
 
+\begin{mydef}[代數結構分類]
+兩個代數結構 $\Algebra[\defaultSet][{\defaultNRelation[\defaultSet,1][\defaultSet,n]}]$、$\Algebra[T][{\defaultNRelation[T,1][T,n]}]$，若有相同的公理 $\mathcal{A}$，則我們稱 $\defaultSet$ 和 $T$ 是同類代數結構。
+\end{mydef}
+
+\begin{mydef}[同態]
+\label{def:algebra:homomorphism}
+兩個同類的代數結構 $\Algebra[\defaultSet][{\defaultNRelation[\defaultSet,1][\defaultSet,n]}]$、$\Algebra[T][{\defaultNRelation[T,1][T,n]}]$ 若能找到一函數 $\Func{f}{\defaultSet}{T}$，使得對所有 $a,b\in{\defaultSet}$、$1\leq{i}\leq{n}$ 都遵守
+\begin{align*}
+{f(\Op[{\defaultRelation[\defaultSet,i]}]{a}{b})}=\Op[{\defaultRelation[T,i]}]{f(a)}{f(b)}
+\end{align*}
+則稱 $\defaultSet$ 和 $T$ \textbf{同態 (Homomorphism)}。
+\end{mydef}
+
+\begin{mydef}[同構]
+\label{def:algebra:isomorphism}
+兩個同類的代數結構 $\Algebra[\defaultSet][{\defaultNRelation[\defaultSet,1][\defaultSet,n]}]$、$\Algebra[T][{\defaultNRelation[T,1][T,n]}]$ 若能找到一函數 $\Func{f}{\defaultSet}{T}$ 滿足以下條件
+\begin{enumerate}
+\item $\defaultSet$ 和 $T$ 同態
+\item $f$ 是一對一函數
+\item $f$ 是映成函數
+\end{enumerate}
+則稱 $\defaultSet$ 和 $T$ \textbf{同構 (Isomorphism)}，$f$ 稱為同構函數。
+\end{mydef}
+
 \section*{習題}
+
 \begin{enumerate}
 \item 定義一個在 $\Int$ 上二元運算 $\diamondsuit$，對所有 $x,y\in{\Int}$，使得 $\Op[\diamondsuit]{x}{y}=3x+y-4$。問 ${({(7\diamondsuit{5})}\diamondsuit{3})}-{7\diamondsuit{(5\diamondsuit{3})}}$？
-\item 證明定理 \ref{thm:algebra:inverse_existence}。
-\item 證明定理 \ref{thm:algebra:inverse_uniqueness}。
+\item 證明定理 \ref{exe:algebra:inverse_existence}。
+\item 證明定理 \ref{exe:algebra:inverse_uniqueness}。
 \item 證明定理 \ref{thm:algebra:left_identity_inverse} 第 \ref{exe:algebra:left_identity_inverse} 項。
-\item 證明定理 \ref{thm:algebra:zero_existence}。
-\item 證明定理 \ref{thm:algebra:zero_uniqueness}。
-\item 證明性質 \ref{pro:algebra:zero_no_inverse}。
-\item 證明定理 \ref{thm:algebra:cancellation_law} 右消去律部分。
-\item 證明定理 \ref{thm:algebra:identity_inverse_equilibrium} ($\Leftarrow$) 部分。
+\item 證明性質 \ref{pro:algebra:inverse_property} 第 \ref{exe:algebra:inverse_property} 項。
+\item 證明定理 \ref{exe:algebra:zero_existence}。
+\item 證明定理 \ref{exe:algebra:zero_uniqueness}。
+\item 證明性質 \ref{exe:algebra:zero_no_inverse}。
+\item 證明定理 \ref{exe:algebra:cancellation_law} 右消去律部分。
+\item 證明定理 \ref{exe:algebra:identity_inverse_equilibrium} ($\Leftarrow$) 部分。
+\item 證明性質 \ref{exe:algebra:accumulating_relational_notation}。
 \item 一封閉的代數結構 $\Algebra$ 有交換律，試證明：
 \begin{enumerate}
 \item 若 $\defaultRelation$ 有左單位元素 $e_l$，則單位元素存在

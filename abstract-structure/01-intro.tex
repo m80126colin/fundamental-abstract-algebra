@@ -1,0 +1,210 @@
+\ifx \allfiles \undefined
+\documentclass[12pt,a4paper,oneside]{report}
+
+%% === CJK 套件 ===
+\usepackage{CJKutf8,CJKnumb}                        % 中文套件
+\usepackage[unicode]{hyperref,xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={blue!100!black},
+    citecolor={blue!75!black},
+    urlcolor={blue!50!black}
+}
+%% === AMS 標準套件 ===
+\usepackage{amsmath,amsfonts,amssymb,amsthm}    % 數學符號
+%% === 章節內容 ===
+\usepackage{enumitem}                           % 修改 enumerate, item
+\usepackage{titletoc,titlesec}                  % titletoc 目錄修改套件, titlesec 美化章節標題套件
+\usepackage{imakeidx}                           % 索引
+%% ===  ===
+\usepackage[chapter]{algorithm}                 % 演算法套件
+\usepackage[noend]{algpseudocode}               % pseudocode 套件
+\usepackage{listings}                           % 程式碼
+%% ===  ===
+\usepackage{tikz,tkz-graph,tkz-berge}
+%% ===  ===
+\usepackage{xkeyval,xargs}
+
+\makeindex[name=noun]        % 索引生成
+\linespread{1.24}
+
+%% === 設定頁面格式 ===
+%\hoffset         = 10pt                      % 水平位移，預設為 0pt
+\voffset         = -15pt                     % 垂直位移，預設為 0pt
+\oddsidemargin   = 0pt                       % 預設為 31pt
+%\topmargin       = 20pt                      % 預設為 20pt
+%\headheight      = 12pt                      % header 的高度，預設為 12pt
+%\headsep         = 25pt                      % header 和 body 的距離，預設為 25pt
+\textheight      = 620pt                     % body 內文部分的高度，預設為 592pt
+\textwidth       = 450pt                     % body 內文部分的寬度，預設為 390pt
+%\marginparsep    = 10pt                      % margin note 和 body 的距離，預設為 10pt
+%\marginparwidth  = 35pt                      % margin note 的寬度，預設為 35pt
+%\footskip        = 30pt                      % footer 高度 + footer 和 body 的距離，預設為 30pt
+
+%% === itemize,enumerate 設定 ===
+%  使用 enumitem 套件
+\setlist[itemize]{itemsep=0pt,parsep=0pt}
+\setlist[enumerate]{itemsep=0pt,parsep=0pt}
+
+\begin{document}
+\begin{CJK}{UTF8}{bkai}
+\newtheorem{mydef}{定義}[chapter]
+\newtheorem*{mydef*}{定義}
+\newtheorem{myrule}[mydef]{原理}
+\newtheorem{mythm}[mydef]{定理}
+\newtheorem{mypropo}[mydef]{性質}
+\newtheorem{mycorol}[mydef]{推論}
+\newtheorem{myexample}[mydef]{範例}
+\newtheorem*{mynote*}{註}
+\numberwithin{equation}{section}
+\renewenvironment{proof}{\textbf{證明}}{\qed}
+\newenvironment{mysol}{\textbf{解答}}{\qed}
+
+%% === 載入符號表 ===
+\input{../symbol-table.tex}
+\fi
+
+\chapter{基礎知識}
+
+\section{數系}
+
+\begin{mydef}[常見數系定義]
+\label{def:intro:number_set_notation}
+對於一般數字，我們定義以下集合：
+\begin{enumerate}
+\item \textbf{非負整數}表示為 $\NonNegInt={\{{0,1,2,\cdots}\}}$
+\item \textbf{整數}表示為 $\Int={\{{\cdots,-1,0,1,\cdots}\}}$
+\item \textbf{正整數}表示為 $\PosInt={\{1,2,\cdots\}}$
+\item \textbf{負整數}表示為 $\NegInt={\{-1,-2,\cdots\}}$
+\item \textbf{有理數}表示為 $\Ration$
+\item \textbf{無理數}表示為 $\Irration$
+\item \textbf{實數}表示為 $\Real$
+\item \textbf{正數}表示為 $\PosReal$
+\item \textbf{負數}表示為 $\NegReal$
+\item \textbf{複數}表示為 $\Comp$
+\end{enumerate}
+\end{mydef}
+
+\begin{mydef}[雙複數]
+定義\textbf{雙複數 (Bicomplex number)} $a+bi+cj+dk$，其中 $a,b,c,d\in{\Real}$，並滿足以下運算法則：
+\begin{enumerate}
+\item $ij=ji=k$
+\item $i^2=k^2=-1$
+\item $j^2=1$
+\end{enumerate}
+\end{mydef}
+
+\begin{mydef}[四元數]
+定義\textbf{四元數 (Quaternion)} $a+bi+cj+dk$，其中 $a,b,c,d\in{\Real}$，並滿足運算法則 $i^2=j^2=k^2=ijk=-1$。
+\end{mydef}
+
+\section{函數}
+
+\begin{mydef}[函數]
+\label{def:intro:function_notation}
+有兩個集合 $A$、$B$，若 $A$ 和 $B$ 之間存在對應關係 $f$，使得所有 $a\in{A}$ 皆可對應到\textbf{唯一}的 $b\in{B}$，則 $f$ 稱為\textbf{函數 (Function)}，記為 $\Func{f}{A}{B}$，此時 $a$ 對應到 $b$ 記為 $f(a)=b$。
+\end{mydef}
+\begin{mynote*}
+對所有 $a\in{A}$ 不會對應到兩個以上的 $b$，或是沒有 $b$ 值。
+\end{mynote*}
+
+\begin{mydef}[定義域、對應域與值域]
+\label{def:intro:domain_codomain_and_range}
+有兩個集合 $A$、$B$，若有一函數 $\Func{f}{A}{B}$，則
+\begin{enumerate}
+\item $A$ 稱為\textbf{定義域 (Domain)}
+\item $B$ 稱為\textbf{對應域 (Codomain)}
+\item 對於所有 $a\in{A}$，$f(a)$ 形成的集合稱為\textbf{值域 (Range)}，記為 $f(A)$ 或是 $R(f)$。
+\end{enumerate}
+\end{mydef}
+
+\begin{mydef}[函數的合成運算]
+\label{def:intro:function_composition}
+有三個集合 $A$、$B$ 和 $C$，若有兩個函數 $f$、$g$
+\begin{align*}
+\Func{f}{A}{B}\\
+\Func{g}{B}{C}
+\end{align*}
+定義函數的合成運算 $h=g\circ{f}$ (簡寫為 $gf$)，其中 $\Func{h}{A}{C}$，使得對所有 $a\in{A}$
+\begin{align*}
+h(a)={{(gf)}{(a)}}={{({g\circ{f}})}{(a)}}={g({f(a)})}
+\end{align*}
+\end{mydef}
+
+\begin{mythm}[函數合成結合律]
+\label{thm:intro:function_composition_associativity}
+有四個集合 $A_1$、$A_2$、$A_3$ 和 $A_4$，若有三個函數 $f$、$g$、$h$
+\begin{align*}
+\Func{f}{A_1}{A_2}\\
+\Func{g}{A_2}{A_3}\\
+\Func{h}{A_3}{A_4}
+\end{align*}
+則函數合成符合 $(hg)f=h(gf)$。
+\end{mythm}
+\begin{proof}
+對所有 $a_1\in{A_1}$，則
+\begin{align*}
+{((hg)f)}{(a_1)} &= {(hg)({f(a_1)})}   &\text{根據定義 \ref{def:intro:function_composition}}\\
+                 &= {h({g({f(a_1)})})} &\text{根據定義 \ref{def:intro:function_composition}}\\
+                 &= h({{(gf)}{(a_1)}}) &\text{根據定義 \ref{def:intro:function_composition}}\\
+                 &= {(h(gf))}{(a_1)}   &\text{根據定義 \ref{def:intro:function_composition}}
+\end{align*}
+\end{proof}
+
+\begin{mydef}[單位函數]
+\label{def:intro:identity_function}
+集合 $A$ 上有一函數 $\Func{I_A}{A}{A}$，若對於所有 $a\in{A}$ 使得 $I_A{(a)}=a$，則 $I_A$ 稱為在 $A$ 上的\textbf{單位函數 (Identity function)}。
+\end{mydef}
+
+\begin{mydef}[反函數]
+\label{def:intro:inverse_function}
+兩集合 $A$、$B$ 上有一函數 $\Func{f}{A}{B}$，若存在 $\Func{g}{B}{A}$ 使得
+\begin{align*}
+gf=I_A\\
+fg=I_B
+\end{align*}
+則 $g$ 稱為 $f$ 的反函數，此時 $g$ 可記為 $f^{-1}$。
+\end{mydef}
+
+\begin{mydef}[可逆函數]
+\label{def:intro:invertible_function}
+兩集合 $A$、$B$ 上有一函數 $\Func{f}{A}{B}$，若 $f$ 存在反函數，則 $f$ 稱為\textbf{可逆函數 (Invertible function)}。
+\end{mydef}
+
+\begin{mydef}[單射函數]
+\label{def:intro:injective_function}
+兩集合 $A$、$B$ 上有一函數 $\Func{f}{A}{B}$，若對於所有 $a_1,a_2\in{A}$，$f(a_1)=f(a_2)$ 可以得到 $a_1=a_2$，我們稱函數 $f$ 為\textbf{一對一函數 (One-to-one function)} 或是\textbf{單射函數 (Injective function)}。
+\end{mydef}
+
+\begin{mydef}[滿射函數]
+\label{def:intro:surjective_function}
+兩集合 $A$、$B$ 上有一函數 $\Func{f}{A}{B}$，若對於所有 $b\in{B}$ 皆可找到 $a\in{A}$ 使得 $f(a)=b$，我們稱函數 $f$ 為\textbf{映成函數 (Onto function)} 或是\textbf{滿射函數 (Surjective function)}。
+\end{mydef}
+
+\begin{mydef}[雙射函數]
+\label{def:intro:bijective_function}
+兩集合 $A$、$B$ 上有一函數 $\Func{f}{A}{B}$，若 $f$ 是單射函數且為滿射函數，則 $f$ 稱為\textbf{雙射函數 (Bijective function)}。
+\end{mydef}
+
+\begin{mythm}
+\label{thm:intro:bijective_iff_invertible}
+\label{exe:intro:bijective_iff_invertible}
+兩集合 $A$、$B$ 上有一函數 $\Func{f}{A}{B}$，則 $f$ 是可逆函數若且唯若 $f$ 是雙射函數。
+\end{mythm}
+\begin{proof}
+做為習題。
+\end{proof}
+
+\section*{習題}
+
+\begin{enumerate}
+\item 證明定理 \ref{exe:intro:bijective_iff_invertible}。
+\end{enumerate}
+
+\ifx \allfiles \undefined
+\printindex[noun]
+
+\clearpage
+\end{CJK}
+\end{document}
+\fi

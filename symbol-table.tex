@@ -1,24 +1,31 @@
 %% === Basic Number Symbols ===
-\providecommandx*{\PosInt}{\ensuremath{{\mathbb{Z}^{+}}}}
 \providecommandx*{\NonNegInt}{\ensuremath{\mathbb{N}}}
 \providecommandx*{\Int}{\ensuremath{\mathbb{Z}}}
+\providecommandx*{\PosInt}{\ensuremath{{\Int^{+}}}}
+\providecommandx*{\NegInt}{\ensuremath{{\Int^{-}}}}
 \providecommandx*{\Ration}{\ensuremath{\mathbb{Q}}}
 \providecommandx*{\Irration}{\ensuremath{\mathbb{Q}_{c}}}
 \providecommandx*{\Real}{\ensuremath{\mathbb{R}}}
+\providecommandx*{\PosReal}{\ensuremath{{\Real^{+}}}}
+\providecommandx*{\NegReal}{\ensuremath{{\Real^{-}}}}
 \providecommandx*{\Comp}{\ensuremath{\mathbb{C}}}
 \providecommandx*{\Mat}[3][1=n,2=n]{\ensuremath{\mathbb{M}_{#1\times{#2}}{\left({#3}\right)}}}
+%% === Function ===
+\providecommandx*{\Func}[3]{\ensuremath{#1:#2\rightarrow{#3}}}
 \providecommandx*{\FuncSet}[3][1=\mathbb{F},2=\mathbb{R},3=\mathbb{R}]{\ensuremath{#1{\left({#2,#3}\right)}}}
-%% ===  ===
+%% === Logic ===
 \providecommandx*{\True}{\ensuremath{\top}}
 \providecommandx*{\False}{\ensuremath{\bot}}
+\providecommandx*{\LogicSet}[2][1=,2=]{\ensuremath{\mathcal{L}^{#2}_{#1}}}
+\providecommandx*{\LogicJoin}{\ensuremath{\vee}}
+\providecommandx*{\LogicMeet}{\ensuremath{\wedge}}
 %% ===  ===
-\providecommandx*{\Func}[3]{\ensuremath{#1:#2\rightarrow{#3}}}
 \providecommandx*{\DefSet}[2]{\ensuremath{\left\{{#1|#2}\right\}}}
 \providecommandx*{\NSet}[3][1=A,2=\times,3=n]{\ensuremath{{#1}_{1}#2{{#1}_{2}}#2\ldots{#2{#1}_{#3}}}}
 
 %% ===  ===
 \providecommandx*{\defaultSet}{\ensuremath{S}}
-\providecommandx*{\defaultRelation}[2][1=,2=\mathcal{R}]{\ensuremath{{#2}_{#1}}}
+\providecommandx*{\defaultRelation}[2][1=,2=\mathcal{R}]{\ensuremath{{{#2}_{#1}}}}
 \providecommandx*{\defaultFirstRelation}{\ensuremath{\defaultRelation[1]}}
 \providecommandx*{\defaultSecondRelation}{\ensuremath{\defaultRelation[2]}}
 \providecommandx*{\defaultTwoRelation}{\ensuremath{\defaultFirstRelation,\defaultSecondRelation}}
